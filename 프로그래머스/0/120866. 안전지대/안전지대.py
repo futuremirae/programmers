@@ -41,8 +41,8 @@ def solution(board):
             
     answer2 = list(set(map(tuple, answer2)))
     
-    if all-len(answer2) < 0 :
-        return 0
+    # if all-len(answer2) < 0 :
+    #     return 0
     
     
     return all-len(answer2)
