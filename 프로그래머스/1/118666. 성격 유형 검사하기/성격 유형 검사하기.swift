@@ -1,25 +1,40 @@
 import Foundation 
 func solution(_ survey:[String], _ choices:[Int]) -> String {
-    var score = ["R": 0, "T": 0, "C": 0, "F": 0, "J": 0, "M": 0, "A":0, "N": 0]
-    var result = ""
-    
-    for i in 0..<survey.count {
-        let first = String(survey[i].first!)
-        let last = String(survey[i].last!)
-        
-        switch choices[i] {
-        case 1...3:
-            score[first]! += (4 - choices[i])
-        case 5...7:
-            score[last]! += (choices[i] - 4)
-        default:
-            break
+   
+    var scoreList: [String:Int] = ["R": 0,"T": 0,"C":0,"F":0, 
+                                    "J":0,"M":0,"A":0,"N":0]
+   
+    var personality: String = ""
+
+    for (naming, choice) in zip(survey, choices) {
+       
+        // if 1...3 ~= choice {
+        //     personality = String(naming.prefix(1))
+        //     scoreList[personality] = 4 - choice
+        // } else if 5...7 ~= choice {
+        //     personality = String(naming.suffix(1))
+        //     scoreList[personality] = choice - 4
+        // }
+        switch choice {
+            case 1...3:
+                personality = String(naming.prefix(1))
+                scoreList[personality]! += (4 - choice)
+            case 5...7: 
+                personality = String(naming.suffix(1))
+                scoreList[personality]! += (choice - 4)
+            default: break
+            
         }
     }
+    
 
-    score["R"]! >= score["T"]! ? result.append("R") : result.append("T")
-    score["C"]! >= score["F"]! ? result.append("C") : result.append("F")
-    score["J"]! >= score["M"]! ? result.append("J") : result.append("M")
-    score["A"]! >= score["N"]! ? result.append("A") : result.append("N")
+    var result: String = ""
+
+    scoreList["R"]! >= scoreList["T"]! ?  result.append("R") : result.append("T")
+    scoreList["C"]! >= scoreList["F"]! ? result.append("C") : result.append("F")
+    scoreList["J"]! >= scoreList["M"]! ? result.append("J") : result.append("M")
+    scoreList["A"]! >= scoreList["N"]! ?  result.append("A") : result.append("N")
+        
     return result
 }
+
