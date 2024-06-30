@@ -1,57 +1,42 @@
 import Foundation
-    extension String {
-    subscript(_ index: Int) -> Character {
-        return self[self.index(self.startIndex, offsetBy: index)]
-    }
-}
+
 func solution(_ new_id:String) -> String {
 
- 
+    // 1차 
     var new_id = new_id.lowercased()
     
-    // id = new_id.components(separatedBy:"")
-    
+    // 2차 
     new_id = new_id.filter { $0.isLetter || $0.isNumber || $0 == "-" || $0 == "_" || $0 == "." }
     
+    //3차 
     while new_id.contains("..") {
         new_id = new_id.replacingOccurrences(of: "..", with: ".")
     }
-    var new_str: String = ""
-    let last_index = new_id.count - 1
-    for (index,s) in new_id.enumerated()  {
-       
-        if (index == 0 || index == last_index) {
-            if (s == ".") {
-                
-                new_str += ""
-            }else{
-                 new_str += String(s)
-
-            }
-           
-        } else{
-            new_str += String(s)
-
-        }
-        
+    //4차
+    while new_id.hasPrefix(".") {
+        new_id.removeFirst()
     }
 
-    if new_str.isEmpty {
-        new_str = "a"
+    while new_id.hasSuffix(".") {
+        new_id.removeLast()
+    }
+
+    // 5차
+    if new_id.isEmpty {
+        new_id = "a"
     } else {
-        if new_str.count >= 16 {
-            new_str = String(new_str.prefix(15))
-            if new_str.suffix(1) == "." {new_str = String(new_str.prefix(14))}
+        //6차 
+        if new_id.count >= 16 {
+            let index = new_id.index(new_id.startIndex, offsetBy: 14) // 처음 0번째 인덱스에서 14칸 떨어진 -> 15번쨰 값 
+            new_id = String(new_id[new_id.startIndex...index]) // 0~15번째 까지 
+            if new_id.hasSuffix(".") { new_id.removeLast() }
         }
     }
-
-    if new_str.count <= 2 {
-       
-        while new_str.count < 3 {
-            new_str += new_str.suffix(1)
+//7차
+    if new_id.count <= 2 {
+        while new_id.count < 3 {
+            new_id += new_id.suffix(1)
         }
     }
-     return new_str
+     return new_id
 } 
-
-//print(solution("=.="))
